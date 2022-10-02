@@ -1,7 +1,7 @@
 import 'package:elections_dapp/repository/election_web3_api_client.dart';
 import 'package:web3dart/web3dart.dart';
 
-/// Notes Repository
+/// Election Repository
 /// Responsible for CRUD operations and Error handling
 class ElectionRepository {
   final ElectionWeb3Client _electionWeb3ApiClient = ElectionWeb3Client();
@@ -14,6 +14,12 @@ class ElectionRepository {
     _electionWeb3ApiClient.init();
   }
 
+  /// Generic callFunction
+  /// Takes [functionName] defined in contract,
+  /// [privateKey] from owner/voter
+  /// and a List of [args] that will be used as params
+  ///
+  /// Other way should be splitting in several operations
   Future<String> callFunction(
       String functionName, String privateKey, List<dynamic> args) async {
     final credentials = EthPrivateKey.fromHex(privateKey);
