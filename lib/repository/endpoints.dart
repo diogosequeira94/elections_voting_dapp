@@ -17,7 +17,10 @@ class Endpoints {
   static String ganacheWsUrl() =>
       Platform.isAndroid ? 'http://10.0.2.2:7545' : 'ws://127.0.0.1:7545/';
 
-  /// Never use private keys in production, use walletconnect + metamask instead
-  static String mockPrivateGanacheKey() =>
-      'eac8360b2df979ebabc6e4e34d599381941bbdd41a9826485c02ddcbdaf69fa0';
+  /// Mock private keys from Ganache
+  static String ownerPrivateKey() =>
+      '389bd8a69fd2b4506fa1d9432fcf70d2ebd9e4b8b2600c42485711eb3765a302';
+
+  static String voterPrivateKey() =>
+      'c3f61c06b2fb3368d37696fa59099fee2dd995d41fc53d7ad0df8a52769a80';
 }

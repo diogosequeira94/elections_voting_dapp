@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'Election App Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        primarySwatch: Colors.deepOrange,
       ),
       home: const HomePage(),
     );
