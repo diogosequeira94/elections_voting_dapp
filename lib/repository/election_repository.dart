@@ -10,7 +10,23 @@ class ElectionRepository {
 
   static ElectionRepository get instance => _instance;
 
-  ElectionRepository._internal(){
-  //  _electionWeb3ApiClient.init();
+  ElectionRepository._internal() {
+    _electionWeb3ApiClient.init();
+  }
+
+  Future<String> callFunction(
+      String functionName, String privateKey, List<dynamic> args) async {
+    final credentials = EthPrivateKey.fromHex(privateKey);
+    final contract = _electionWeb3ApiClient.getDeployedContract;
+    final function = contract.function(functionName);
+
+    return await _electionWeb3ApiClient.ethWeb3client.sendTransaction(
+      credentials,
+      Transaction.callContract(
+        contract: contract,
+        function: function,
+        parameters: args,
+      ),
+    );
   }
 }

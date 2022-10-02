@@ -8,7 +8,7 @@ import 'package:web_socket_channel/io.dart';
 
 class ElectionWeb3Client {
   late Web3Client ethWeb3client;
-  late DeployedContract deployedContract;
+  late DeployedContract _deployedContract;
   late ContractAbi _contractAbiCode;
   late EthereumAddress _contractAddress;
   late EthPrivateKey _credentials;
@@ -16,6 +16,7 @@ class ElectionWeb3Client {
   static const electionContractPath = 'assets/contracts/election.json';
 
   EthPrivateKey get getCredentials => _credentials;
+  DeployedContract get getDeployedContract => _deployedContract;
 
   Future<void> init() async {
     ethWeb3client = Web3Client(
@@ -29,7 +30,7 @@ class ElectionWeb3Client {
     _contractAbiCode = await _getABI();
     _contractAddress = await _getAddress(_contractAbiCode);
     _credentials = await _getCredentials();
-    deployedContract = await loadContract();
+    _deployedContract = await loadContract();
   }
 
   Future<ContractAbi> _getABI() async {
