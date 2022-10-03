@@ -50,4 +50,25 @@ class ElectionRepository {
     print('Candidate added successfully');
     return response;
   }
+
+  Future<String> authorizeVoter(String address) async {
+    final response = await callFunction('authorizeVoter',
+        Endpoints.ownerPrivateKey(), [EthereumAddress.fromHex(address)]);
+    print('Voter successfully authorized');
+    return response;
+  }
+
+  /// Fix
+  Future<List> getCandidates() async {
+    final result = await callFunction(
+        'getCandidatesNumber', Endpoints.ownerPrivateKey(), []);
+    return result as List;
+  }
+
+  Future<String> vote(int candidateIndex) async {
+    final result = await callFunction(
+        'vote', Endpoints.voterPrivateKey(), [BigInt.from(candidateIndex)]);
+    print('Vote counted successfully');
+    return result;
+  }
 }
