@@ -34,6 +34,8 @@ class ElectionRepository {
         function: function,
         parameters: args,
       ),
+      chainId: null,
+      fetchChainIdFromNetworkId: true,
     );
   }
 

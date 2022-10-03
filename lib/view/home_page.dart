@@ -1,4 +1,5 @@
 import 'package:elections_dapp/bloc/election_bloc.dart';
+import 'package:elections_dapp/view/election_information.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,6 +25,13 @@ class HomePage extends StatelessWidget {
               content: Text('Election started with success!'),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const ElectionInformation(electionName: 'My Election'),
+              ),
+            );
             // Navigate to election information page
           }
         },
