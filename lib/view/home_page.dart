@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:elections_dapp/bloc/election_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,14 +37,17 @@ class HomePage extends StatelessWidget {
                     filled: true, hintText: 'Enter election name'),
               ),
               Padding(
-                padding: const EdgeInsets.only(top:24.0),
+                padding: const EdgeInsets.only(top: 24.0),
                 child: SizedBox(
                   width: double.infinity,
                   height: 45,
                   child: ElevatedButton(
                     onPressed: () async {
                       if (controller.text.isNotEmpty) {
-                        print('Election Started!');
+                        context.read<ElectionBloc>().add(
+                              StartElectionPressed(
+                                  electionName: controller.text),
+                            );
                       }
                     },
                     child: const Text('Start Election'),
