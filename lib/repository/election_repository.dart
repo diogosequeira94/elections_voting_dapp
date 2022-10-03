@@ -1,4 +1,5 @@
 import 'package:elections_dapp/repository/election_web3_api_client.dart';
+import 'package:elections_dapp/repository/endpoints.dart';
 import 'package:web3dart/web3dart.dart';
 
 /// Election Repository
@@ -34,5 +35,19 @@ class ElectionRepository {
         parameters: args,
       ),
     );
+  }
+
+  Future<String> startElection(String name) async {
+    final response = await callFunction(
+        'startElection', Endpoints.ownerPrivateKey(), [name]);
+    print('Election started successfully');
+    return response;
+  }
+
+  Future<String> addCandidate(String candidateName) async {
+    final response = await callFunction(
+        'addCandidate', Endpoints.ownerPrivateKey(), [candidateName]);
+    print('Candidate added successfully');
+    return response;
   }
 }
