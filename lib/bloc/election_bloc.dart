@@ -13,14 +13,13 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<StartElectionPressed>(_onStartElectionPressed);
   }
 
-  Future<void> _onStartElectionPressed(
-      StartElectionPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onStartElectionPressed(StartElectionPressed event, Emitter<ElectionState> emit) async {
     emit(ElectionStartInProgress());
     await Future.delayed(const Duration(seconds: 3));
     try {
       await electionRepository.startElection(event.electionName);
-      emit(ElectionStartSuccess());
-    } on Object catch (error) {
+      emit(ElectionStartSuccess(electionName: event.electionName));
+    } on Object catch (_) {
       emit(ElectionStartFailure());
     }
   }

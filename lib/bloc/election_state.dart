@@ -15,8 +15,10 @@ class ElectionStartInProgress extends ElectionState {
 }
 
 class ElectionStartSuccess extends ElectionState {
+  final String electionName;
+  const ElectionStartSuccess({required this.electionName});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [electionName];
 }
 
 class ElectionStartFailure extends ElectionState {

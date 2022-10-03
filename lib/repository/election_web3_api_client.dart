@@ -23,8 +23,7 @@ class ElectionWeb3Client {
       Endpoints.ganacheApiUrl(),
       Client(),
       socketConnector: () {
-        return IOWebSocketChannel.connect(Endpoints.ganacheWsUrl())
-            .cast<String>();
+        return IOWebSocketChannel.connect(Endpoints.ganacheWsUrl()).cast<String>();
       },
     );
     _contractAbiCode = await _getABI();
