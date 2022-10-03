@@ -13,7 +13,7 @@ class ElectionWeb3Client {
   late EthereumAddress _contractAddress;
   late EthPrivateKey _credentials;
 
-  static const electionContractPath = 'assets/contracts/Election.json';
+  static const electionContractPath = 'build/contracts/Election.json';
 
   EthPrivateKey get getCredentials => _credentials;
   DeployedContract get getDeployedContract => _deployedContract;

@@ -19,7 +19,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     try {
       await electionRepository.startElection(event.electionName);
       emit(ElectionStartSuccess(electionName: event.electionName));
-    } on Object catch (_) {
+    } on Object catch (error) {
+      print(error);
       emit(ElectionStartFailure());
     }
   }
