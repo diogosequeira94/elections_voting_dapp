@@ -1,4 +1,5 @@
 import 'package:elections_dapp/bloc/election_bloc.dart';
+import 'package:elections_dapp/repository/election_repository.dart';
 import 'package:elections_dapp/view/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ElectionBloc(),
+      create: (context) => ElectionBloc(
+        electionRepository: ElectionRepository.instance,
+      ),
       child: MaterialApp(
         title: 'Election App Demo',
         debugShowCheckedModeBanner: false,
