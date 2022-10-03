@@ -47,7 +47,7 @@ class ElectionRepository {
   Future<String> addCandidate(String candidateName) async {
     final response = await callFunction(
         'addCandidate', Endpoints.ownerPrivateKey(), [candidateName]);
-    print('Candidate added successfully');
+    print('Candidatea added successfully');
     return response;
   }
 }
