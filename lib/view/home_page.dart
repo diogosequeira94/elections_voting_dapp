@@ -12,51 +12,71 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Elections Dapp Demo'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/governance-image.png',
-                width: 200,
-                height: 200,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0),
-                child: Text(
-                  'Welcome to the elections!',
-                  style: TextStyle(fontSize: 24.0),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              TextField(
-                controller: controller,
-                decoration: const InputDecoration(
-                    filled: true, hintText: 'Enter election name'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 45,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (controller.text.isNotEmpty) {
-                        context.read<ElectionBloc>().add(
-                              StartElectionPressed(
-                                  electionName: controller.text),
-                            );
-                      }
-                    },
-                    child: const Text('Start Election'),
+      body: BlocConsumer<ElectionBloc, ElectionState>(
+        listener: (context, state) {
+          if (state is ElectionStartFailure) {
+            const snackBar = SnackBar(
+              content: Text('Oops, something went wrong!'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          } else if (state is ElectionStartSuccess) {
+            const snackBar = SnackBar(
+              content: Text('Election started with success!'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            // Navigate to election information page
+          }
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/governance-image.png',
+                    width: 200,
+                    height: 200,
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 32.0),
+                    child: Text(
+                      'Welcome to the elections!',
+                      style: TextStyle(fontSize: 24.0),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  TextField(
+                    controller: controller,
+                    decoration: const InputDecoration(
+                        filled: true, hintText: 'Enter election name'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (controller.text.isNotEmpty) {
+                            context.read<ElectionBloc>().add(
+                                  StartElectionPressed(
+                                      electionName: controller.text),
+                                );
+                          }
+                        },
+                        child: state is ElectionStartInProgress
+                            ? const CircularProgressIndicator()
+                            : const Text('Start Election'),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
