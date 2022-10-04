@@ -1,16 +1,49 @@
-# elections_dapp
+# Election simulator
 
-A new Flutter project.
+Simulate adding candidates, authrozing voters and vote through Ethereum addresses on a mock blockchain server with Ganache.
 
-## Getting Started
+## Requirements 
+- Android Studio / VScode
+- Node.js
+- Truffle (npm install -g truffle)
+- Ganache (local blockchain)
 
-This project is a starting point for a Flutter application.
+## Folder structure
+```
+|-- elections_voting
+        ...
+        -- contracts
+        |   |-- Migrations.sol
+        |   |-- Election.sol
+        |-- lib
+        |   |-- bloc
+        |   |   |-- election_bloc.dart
+        |   |   |-- election_event.dart
+        |   |   |-- election_state.dart
+        |   |-- models
+        |   |   |-- candidate.dart
+        |   |   |-- voter.dart
+        |   |   |-- election.dart
+        |   |-- repository
+        |   |   |-- endpoints.dart
+        |   |   |-- election_repository.dart
+        |   |   |-- election_web3_api_client.dart
+        |   |-- view
+        |   |   |-- election_information.dart
+        |   |   |-- home_page.dart
+        |   |-- main.dart
+        -- migrations
+        |   |-- 1_electioncontract_migration.js
+        ...
+    
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Stack
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+**Server**: Ganash
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Smart Contracts**: Solidity, Truffle
+
+**Client**: Flutter
+
+**State Management**: BLoC
