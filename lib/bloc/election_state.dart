@@ -25,3 +25,39 @@ class ElectionStartFailure extends ElectionState {
   @override
   List<Object> get props => [];
 }
+
+class AddCandidateInProgress extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class AddCandidateSuccess extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class AddCandidateFailure extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class AuthorizeVoterInProgress extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class AuthorizeVoterSuccess extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class AuthorizeVoterFailure extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class AuthorizeVoterAlreadyAuthorized extends AuthorizeVoterFailure {
+  @override
+  List<Object> get props => [];
+}
+

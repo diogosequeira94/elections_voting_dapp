@@ -11,3 +11,19 @@ class StartElectionPressed extends ElectionEvent {
   @override
   List<Object?> get props => [electionName];
 }
+
+class AddCandidatePressed extends ElectionEvent {
+  final String candidateName;
+  const AddCandidatePressed({required this.candidateName});
+
+  @override
+  List<Object?> get props => [candidateName];
+}
+
+class AuthorizedVoterPressed extends ElectionEvent {
+  final String voterAddress;
+  const AuthorizedVoterPressed({required this.voterAddress});
+
+  @override
+  List<Object?> get props => [voterAddress];
+}
