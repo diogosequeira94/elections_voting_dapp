@@ -16,9 +16,11 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<AddCandidatePressed>(_onAddCandidatePressed);
     on<AuthorizedVoterPressed>(_onAuthorizeVoterPressed);
     on<GetCandidateInfoPressed>(_onGetCandidateInfoPressed);
+    on<FetchAllCandidates>(_onFetchAllCandidates);
   }
 
-  Future<void> _onStartElectionPressed(StartElectionPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onStartElectionPressed(
+      StartElectionPressed event, Emitter<ElectionState> emit) async {
     emit(ElectionStartInProgress());
     await Future.delayed(const Duration(seconds: 2));
     try {
@@ -30,7 +32,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onAddCandidatePressed(AddCandidatePressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onAddCandidatePressed(
+      AddCandidatePressed event, Emitter<ElectionState> emit) async {
     emit(AddCandidateInProgress());
     try {
       await electionRepository.addCandidate(event.candidateName);
@@ -42,7 +45,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onAuthorizeVoterPressed(AuthorizedVoterPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onAuthorizeVoterPressed(
+      AuthorizedVoterPressed event, Emitter<ElectionState> emit) async {
     emit(AuthorizeVoterInProgress());
     try {
       await electionRepository.authorizeVoter(event.voterAddress);
@@ -53,17 +57,27 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onGetCandidateInfoPressed(GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onGetCandidateInfoPressed(
+      GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
     emit(GetCandidateInfoInProgress());
     try {
-      final candidatesList = await electionRepository.getCandidates();
-      // final candidate = await electionRepository.getCandidateInfo(event.index);
-      print(candidatesList.toString());
-      final mockCandidate = Candidate(name: 'mock', votesNumber: 1);
-      emit(GetCandidateInfoSuccess(mockCandidate));
+      final candidate = await electionRepository.getCandidateInfo(event.index);
+      emit(GetCandidateInfoSuccess(candidate));
     } on Object catch (error) {
       print(error);
       emit(GetCandidateInfoFailure());
+    }
+  }
+
+  Future<void> _onFetchAllCandidates(
+      FetchAllCandidates event, Emitter<ElectionState> emit) async {
+    emit(FetchCandidatesInProgress());
+    try {
+      final candidatesList = await electionRepository.getCandidates();
+      emit(FetchCandidatesSuccess(candidatesList));
+    } on Object catch (error) {
+      print(error);
+      emit(FetchCandidatesFailure());
     }
   }
 }

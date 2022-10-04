@@ -35,3 +35,8 @@ class GetCandidateInfoPressed extends ElectionEvent {
   @override
   List<Object?> get props => [index];
 }
+
+class FetchAllCandidates extends ElectionEvent {
+  @override
+  List<Object?> get props => [];
+}

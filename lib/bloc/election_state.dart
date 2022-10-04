@@ -77,3 +77,20 @@ class GetCandidateInfoFailure extends ElectionState {
   @override
   List<Object> get props => [];
 }
+
+class FetchCandidatesInProgress extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class FetchCandidatesSuccess extends ElectionState {
+  final List<Candidate> candidates;
+  const FetchCandidatesSuccess(this.candidates);
+  @override
+  List<Object> get props => [candidates];
+}
+
+class FetchCandidatesFailure extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
