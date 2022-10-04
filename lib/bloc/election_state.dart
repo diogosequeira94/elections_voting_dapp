@@ -77,4 +77,3 @@ class GetCandidateInfoFailure extends ElectionState {
   @override
   List<Object> get props => [];
 }
-

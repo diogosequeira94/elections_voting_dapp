@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ElectionInformation extends StatefulWidget {
   final String electionName;
-  const ElectionInformation({Key? key, required this.electionName})
-      : super(key: key);
+  const ElectionInformation({Key? key, required this.electionName}) : super(key: key);
 
   @override
   State<ElectionInformation> createState() => _ElectionInformationState();
@@ -21,7 +20,7 @@ class _ElectionInformationState extends State<ElectionInformation> {
         title: Text(widget.electionName),
       ),
       body: BlocBuilder<ElectionBloc, ElectionState>(
-        builder: (context, state){
+        builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
             child: Column(
@@ -104,8 +103,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                   TextField(
                     controller: addCandidateController,
                     keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                        filled: true, hintText: 'Enter candidate name'),
+                    decoration: const InputDecoration(filled: true, hintText: 'Enter candidate name'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0),
@@ -116,9 +114,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                         onPressed: () async {
                           if (addCandidateController.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
-                                  AddCandidatePressed(
-                                      candidateName:
-                                          addCandidateController.text),
+                                  AddCandidatePressed(candidateName: addCandidateController.text),
                                 );
                           }
                         },
@@ -136,8 +132,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                   TextField(
                     keyboardType: TextInputType.text,
                     controller: addVoteController,
-                    decoration: const InputDecoration(
-                        filled: true, hintText: 'Enter voter address'),
+                    decoration: const InputDecoration(filled: true, hintText: 'Enter voter address'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0),
@@ -151,8 +146,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                         onPressed: () async {
                           if (addVoteController.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
-                                  AuthorizedVoterPressed(
-                                      voterAddress: addVoteController.text),
+                                  AuthorizedVoterPressed(voterAddress: addVoteController.text),
                                 );
                           }
                         },

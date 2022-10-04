@@ -28,8 +28,7 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ElectionInformation(electionName: state.electionName),
+                builder: (context) => ElectionInformation(electionName: state.electionName),
               ),
             );
             // Navigate to election information page
@@ -57,8 +56,7 @@ class HomePage extends StatelessWidget {
                   ),
                   TextField(
                     controller: controller,
-                    decoration: const InputDecoration(
-                        filled: true, hintText: 'Enter election name'),
+                    decoration: const InputDecoration(filled: true, hintText: 'Enter election name'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0),
@@ -69,14 +67,12 @@ class HomePage extends StatelessWidget {
                         onPressed: () async {
                           if (controller.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
-                                  StartElectionPressed(
-                                      electionName: controller.text),
+                                  StartElectionPressed(electionName: controller.text),
                                 );
                           }
                         },
                         child: state is ElectionStartInProgress
-                            ? const CircularProgressIndicator(
-                                color: Colors.white)
+                            ? const CircularProgressIndicator(color: Colors.white)
                             : const Text('Start Election'),
                       ),
                     ),
