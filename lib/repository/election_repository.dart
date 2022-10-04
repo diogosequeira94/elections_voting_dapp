@@ -61,11 +61,26 @@ class ElectionRepository {
     return response;
   }
 
-  /// Fix
-  Future<List> getCandidates() async {
-    final candidatesList = await callFunction(
-        'getCandidatesNumber', Endpoints.ownerPrivateKey(), []);
-    return candidatesList as List;
+  Future<List<Candidate>> getCandidates() async {
+    final contract = _electionWeb3ApiClient.getDeployedContract;
+    final function = contract.function('getAlLCandidates');
+    final candidatesRawList = await _electionWeb3ApiClient.ethWeb3client.call(
+      contract: contract,
+      function: function,
+      params: [],
+    );
+
+    List innerArray = candidatesRawList[0];
+    List<Candidate> candidatesList = [];
+
+    for (var i = 0; i < innerArray.length; i++) {
+      final candidate = Candidate(
+        name: innerArray[i][0],
+        votesNumber: innerArray[i][1].toInt(),
+      );
+      candidatesList.add(candidate);
+    }
+    return candidatesList;
   }
 
   Future<Candidate> getCandidateInfo(int index) async {
@@ -77,8 +92,8 @@ class ElectionRepository {
       params: [BigInt.from(index)],
     );
     print('Getting candidate info....');
-    final candidate =
-        Candidate(name: candidateInfo[0][0], votesNumber: candidateInfo[0][1].toInt());
+    final candidate = Candidate(
+        name: candidateInfo[0][0], votesNumber: candidateInfo[0][1].toInt());
     return candidate;
   }
 

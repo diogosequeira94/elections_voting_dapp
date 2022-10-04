@@ -56,9 +56,11 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   Future<void> _onGetCandidateInfoPressed(GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
     emit(GetCandidateInfoInProgress());
     try {
-      final candidate = await electionRepository.getCandidateInfo(event.index);
-      print(candidate.toString());
-      emit(GetCandidateInfoSuccess(candidate));
+      final candidatesList = await electionRepository.getCandidates();
+      // final candidate = await electionRepository.getCandidateInfo(event.index);
+      print(candidatesList.toString());
+      final mockCandidate = Candidate(name: 'mock', votesNumber: 1);
+      emit(GetCandidateInfoSuccess(mockCandidate));
     } on Object catch (error) {
       print(error);
       emit(GetCandidateInfoFailure());
