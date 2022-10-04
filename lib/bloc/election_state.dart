@@ -61,3 +61,20 @@ class AuthorizeVoterAlreadyAuthorized extends AuthorizeVoterFailure {
   List<Object> get props => [];
 }
 
+class GetCandidateInfoInProgress extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+
+class GetCandidateInfoSuccess extends ElectionState {
+  final Candidate candidate;
+  const GetCandidateInfoSuccess(this.candidate);
+  @override
+  List<Object> get props => [candidate];
+}
+
+class GetCandidateInfoFailure extends ElectionState {
+  @override
+  List<Object> get props => [];
+}
+

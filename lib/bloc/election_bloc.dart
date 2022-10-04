@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:elections_dapp/models/candidate.dart';
 import 'package:elections_dapp/repository/election_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -14,6 +15,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<StartElectionPressed>(_onStartElectionPressed);
     on<AddCandidatePressed>(_onAddCandidatePressed);
     on<AuthorizedVoterPressed>(_onAuthorizeVoterPressed);
+    on<GetCandidateInfoPressed>(_onGetCandidateInfoPressed);
   }
 
   Future<void> _onStartElectionPressed(
@@ -51,6 +53,19 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     } on Object catch (error) {
       print(error);
       emit(AuthorizeVoterFailure());
+    }
+  }
+
+  Future<void> _onGetCandidateInfoPressed(
+      GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
+    emit(GetCandidateInfoInProgress());
+    try {
+      final candidate = await electionRepository.getCandidateInfo(event.index);
+      print(candidate.toString());
+      emit(GetCandidateInfoSuccess(candidate));
+    } on Object catch (error) {
+      print(error);
+      emit(GetCandidateInfoFailure());
     }
   }
 }

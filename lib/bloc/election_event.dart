@@ -27,3 +27,11 @@ class AuthorizedVoterPressed extends ElectionEvent {
   @override
   List<Object?> get props => [voterAddress];
 }
+
+class GetCandidateInfoPressed extends ElectionEvent {
+  final int index;
+  const GetCandidateInfoPressed({required this.index});
+
+  @override
+  List<Object?> get props => [index];
+}

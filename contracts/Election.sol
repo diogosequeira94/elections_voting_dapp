@@ -1,4 +1,5 @@
 //SPDX_Licence-Identifier: UNLICENSED
+pragma experimental ABIEncoderV2;
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Election {
@@ -58,10 +59,11 @@ contract Election {
         candidates[candidateIndex].votesNumber++;
     }
 
-    function getCandidateInfo(uint index) public view return(Candidate memory){
+    function getCandidateInfo(uint index) public view returns(Candidate memory){
         return candidates[index];
     }
-    function getTotalVotes() public view return(uint){
+
+    function getTotalVotes() public view returns(uint){
         return totalVotes;
     }
 }

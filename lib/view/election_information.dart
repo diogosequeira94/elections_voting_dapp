@@ -45,6 +45,17 @@ class _ElectionInformationState extends State<ElectionInformation> {
                     ),
                   ],
                 ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  ),
+                  onPressed: () async {
+                    context.read<ElectionBloc>().add(const GetCandidateInfoPressed(index: 0));
+                  },
+                  child: state is AuthorizeVoterInProgress
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text('Get Candidate Info'),
+                ),
                 const ElectionInputsWidget(),
               ],
             ),

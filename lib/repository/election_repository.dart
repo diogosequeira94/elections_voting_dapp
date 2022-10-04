@@ -66,6 +66,7 @@ class ElectionRepository {
 
   /// Fix
   Future<Candidate> getCandidateInfo(int index) async {
+    print('Getting candidate info....');
     final candidateInfo = await callFunction('getCandidatesNumber', Endpoints.ownerPrivateKey(), [BigInt.from(index)]);
     return candidateInfo as Candidate;
   }
