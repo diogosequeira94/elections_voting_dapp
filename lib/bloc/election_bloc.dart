@@ -9,6 +9,7 @@ part 'election_state.dart';
 
 class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   final ElectionRepository electionRepository;
+  int totalCandidates = 0;
   ElectionBloc({required this.electionRepository}) : super(ElectionInitial()) {
     on<StartElectionPressed>(_onStartElectionPressed);
     on<AddCandidatePressed>(_onAddCandidatePressed);
@@ -33,6 +34,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     emit(AddCandidateInProgress());
     try {
       await electionRepository.addCandidate(event.candidateName);
+      totalCandidates++;
       emit(AddCandidateSuccess());
     } on Object catch (error) {
       print(error);

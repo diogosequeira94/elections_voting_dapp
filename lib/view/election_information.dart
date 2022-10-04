@@ -20,32 +20,36 @@ class _ElectionInformationState extends State<ElectionInformation> {
       appBar: AppBar(
         title: Text(widget.electionName),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              key: const Key('electionInfo_candidateVotes'),
+      body: BlocBuilder<ElectionBloc, ElectionState>(
+        builder: (context, state){
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: const [
-                    Text('Total Candidates', style: labelTextStyle),
-                    Text('0', style: valueTextStyle),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  key: const Key('electionInfo_candidateVotes'),
+                  children: [
+                    Column(
+                      children: [
+                        const Text('Total Candidates', style: labelTextStyle),
+                        Text(context.read<ElectionBloc>().totalCandidates.toString(), style: valueTextStyle),
+                      ],
+                    ),
+                    Column(
+                      children: const [
+                        Text('Total Votes', style: labelTextStyle),
+                        Text('0', style: valueTextStyle),
+                      ],
+                    ),
                   ],
                 ),
-                Column(
-                  children: const [
-                    Text('Total Votes', style: labelTextStyle),
-                    Text('0', style: valueTextStyle),
-                  ],
-                ),
+                const ElectionInputsWidget(),
               ],
             ),
-            const ElectionInputsWidget(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -88,6 +92,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                 children: [
                   TextField(
                     controller: addCandidateController,
+                    keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
                         filled: true, hintText: 'Enter candidate name'),
                   ),
@@ -107,7 +112,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                           }
                         },
                         child: state is AddCandidateInProgress
-                            ? const CircularProgressIndicator()
+                            ? const CircularProgressIndicator(color: Colors.white)
                             : const Text('Add Candidate'),
                       ),
                     ),
@@ -118,6 +123,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
               Column(
                 children: [
                   TextField(
+                    keyboardType: TextInputType.text,
                     controller: addVoteController,
                     decoration: const InputDecoration(
                         filled: true, hintText: 'Enter voter address'),
@@ -128,6 +134,9 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                       width: double.infinity,
                       height: 45,
                       child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.green),
+                        ),
                         onPressed: () async {
                           if (addVoteController.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
@@ -137,7 +146,7 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                           }
                         },
                         child: state is AuthorizeVoterInProgress
-                            ? const CircularProgressIndicator()
+                            ? const CircularProgressIndicator(color: Colors.white)
                             : const Text('Authorize Voter'),
                       ),
                     ),

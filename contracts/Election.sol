@@ -58,4 +58,7 @@ contract Election {
         candidates[candidateIndex].votesNumber++;
     }
 
+    function getCandidateInfo(uint index) public view return(Candidate memory){
+        return candidates[index];
+    }
 }
