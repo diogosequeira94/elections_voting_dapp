@@ -130,14 +130,15 @@ class _ElectionInputsWidgetState extends State<ElectionInputsWidget> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (addVoteController.text.isNotEmpty) {
-                            // context.read<ElectionBloc>().add(
-                            //   StartElectionPressed(
-                            //       electionName: addVoterController.text),
-                            // );
-                            print('Voter Added');
+                            context.read<ElectionBloc>().add(
+                                  AuthorizedVoterPressed(
+                                      voterAddress: addVoteController.text),
+                                );
                           }
                         },
-                        child: const Text('Add Voter'),
+                        child: state is AuthorizeVoterInProgress
+                            ? const CircularProgressIndicator()
+                            : const Text('Authorize Voter'),
                       ),
                     ),
                   ),
