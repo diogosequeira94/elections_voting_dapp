@@ -19,8 +19,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<FetchAllCandidates>(_onFetchAllCandidates);
   }
 
-  Future<void> _onStartElectionPressed(
-      StartElectionPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onStartElectionPressed(StartElectionPressed event, Emitter<ElectionState> emit) async {
     emit(ElectionStartInProgress());
     await Future.delayed(const Duration(seconds: 2));
     try {
@@ -32,8 +31,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onAddCandidatePressed(
-      AddCandidatePressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onAddCandidatePressed(AddCandidatePressed event, Emitter<ElectionState> emit) async {
     emit(AddCandidateInProgress());
     try {
       await electionRepository.addCandidate(event.candidateName);
@@ -45,8 +43,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onAuthorizeVoterPressed(
-      AuthorizedVoterPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onAuthorizeVoterPressed(AuthorizedVoterPressed event, Emitter<ElectionState> emit) async {
     emit(AuthorizeVoterInProgress());
     try {
       await electionRepository.authorizeVoter(event.voterAddress);
@@ -57,8 +54,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onGetCandidateInfoPressed(
-      GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onGetCandidateInfoPressed(GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
     emit(GetCandidateInfoInProgress());
     try {
       final candidate = await electionRepository.getCandidateInfo(event.index);
@@ -69,8 +65,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onFetchAllCandidates(
-      FetchAllCandidates event, Emitter<ElectionState> emit) async {
+  Future<void> _onFetchAllCandidates(FetchAllCandidates event, Emitter<ElectionState> emit) async {
     emit(FetchCandidatesInProgress());
     try {
       final candidatesList = await electionRepository.getCandidates();
