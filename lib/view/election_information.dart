@@ -19,7 +19,12 @@ class _ElectionInformationState extends State<ElectionInformation> {
       appBar: AppBar(
         title: Text(widget.electionName),
       ),
-      body: BlocBuilder<ElectionBloc, ElectionState>(
+      body: BlocConsumer<ElectionBloc, ElectionState>(
+        listener: (context, state) {
+          if (state is AddCandidateSuccess) {
+            context.read<ElectionBloc>().add(FetchAllCandidates());
+          }
+        },
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
@@ -44,17 +49,23 @@ class _ElectionInformationState extends State<ElectionInformation> {
                     ),
                   ],
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.blue),
-                  ),
-                  onPressed: () async {
-                    context.read<ElectionBloc>().add(const GetCandidateInfoPressed(index: 0));
-                  },
-                  child: state is AuthorizeVoterInProgress
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text('Get Candidate Info'),
-                ),
+                if (state is FetchCandidatesSuccess)
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.candidates.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final candidate = state.candidates[index];
+                        return ListTile(
+                          leading: const Icon(Icons.person),
+                          title: Text(
+                            candidate.name,
+                          ),
+                          trailing: Text(
+                            candidate.votesNumber.toString(),
+                            style: const TextStyle(color: Colors.green, fontSize: 15),
+                          ),
+                        );
+                      }),
                 const ElectionInputsWidget(),
               ],
             ),
