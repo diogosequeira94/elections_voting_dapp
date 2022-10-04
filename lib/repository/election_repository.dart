@@ -1,3 +1,4 @@
+import 'package:elections_dapp/models/candidate.dart';
 import 'package:elections_dapp/repository/election_web3_api_client.dart';
 import 'package:elections_dapp/repository/endpoints.dart';
 import 'package:web3dart/web3dart.dart';
@@ -59,13 +60,24 @@ class ElectionRepository {
 
   /// Fix
   Future<List> getCandidates() async {
-    final result = await callFunction('getCandidatesNumber', Endpoints.ownerPrivateKey(), []);
-    return result as List;
+    final candidatesList = await callFunction('getCandidatesNumber', Endpoints.ownerPrivateKey(), []);
+    return candidatesList as List;
+  }
+
+  /// Fix
+  Future<Candidate> getCandidateInfo(int index) async {
+    final candidateInfo = await callFunction('getCandidatesNumber', Endpoints.ownerPrivateKey(), [BigInt.from(index)]);
+    return candidateInfo as Candidate;
+  }
+
+  Future<String> getTotalVotes() async {
+    final voteCount = await callFunction('getTotalVotes', Endpoints.ownerPrivateKey(), []);
+    return voteCount;
   }
 
   Future<String> vote(int candidateIndex) async {
-    final result = await callFunction('vote', Endpoints.voterPrivateKey(), [BigInt.from(candidateIndex)]);
+    final response = await callFunction('vote', Endpoints.voterPrivateKey(), [BigInt.from(candidateIndex)]);
     print('Vote counted successfully');
-    return result;
+    return response;
   }
 }
