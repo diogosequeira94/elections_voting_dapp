@@ -41,8 +41,9 @@ class ElectionRepository {
   }
 
   Future<String> startElection(String name) async {
+    final id = Uuid.v4();
     final response = await callFunction(
-        'startElection', Endpoints.ownerPrivateKey(), [name]);
+        'startElection', Endpoints.ownerPrivateKey(), [id, name, Endpoints.ownerPrivateKey()]);
     print('Election started successfully');
     return response;
   }
