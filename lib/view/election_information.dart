@@ -1,4 +1,6 @@
 import 'package:elections_dapp/bloc/election_bloc.dart';
+import 'package:elections_dapp/view/add_candidate_form.dart';
+import 'package:elections_dapp/view/widgets/address_dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +20,34 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
     const valueTextStyle = TextStyle(fontSize: 40.0);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(widget.electionName),
+        actions: [
+          IconButton(
+              onPressed: () {
+                final topPadding = MediaQuery.of(context).padding.top;
+                showModalBottomSheet(
+                  context: context,
+                  useRootNavigator: true,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (_) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height / 1.5,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16.0),
+                          topRight: Radius.circular(16.0),
+                        ),
+                      ),
+                      child: const AddCandidateFormWidget(),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.add)),
+        ],
       ),
       body: BlocConsumer<ElectionBloc, ElectionState>(
         listener: (context, state) {
@@ -27,38 +56,40 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
           }
         },
         builder: (context, state) {
-          return Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  key: const Key('electionInfo_candidateVotes'),
-                  children: [
-                    Column(
-                      children: [
-                        const Text('Total Candidates', style: labelTextStyle),
-                        Text(
-                            context
-                                .read<ElectionBloc>()
-                                .totalCandidates
-                                .toString(),
-                            style: valueTextStyle),
-                      ],
-                    ),
-                    Column(
-                      children: const [
-                        Text('Total Votes', style: labelTextStyle),
-                        Text('0', style: valueTextStyle),
-                      ],
-                    ),
-                  ],
-                ),
-                const _CandidatesListWidget(),
-                const _ElectionInputsWidget(),
-              ],
+          return SingleChildScrollView(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    key: const Key('electionInfo_candidateVotes'),
+                    children: [
+                      Column(
+                        children: [
+                          const Text('Total Candidates', style: labelTextStyle),
+                          Text(
+                              context
+                                  .read<ElectionBloc>()
+                                  .totalCandidates
+                                  .toString(),
+                              style: valueTextStyle),
+                        ],
+                      ),
+                      Column(
+                        children: const [
+                          Text('Total Votes', style: labelTextStyle),
+                          Text('0', style: valueTextStyle),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const _CandidatesListWidget(),
+                  const _ElectionInputsWidget(),
+                ],
+              ),
             ),
           );
         },
@@ -72,36 +103,39 @@ class _CandidatesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ElectionBloc, ElectionState>(
-      builder: (context, state) {
-        if (state is FetchCandidatesSuccess) {
-          return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.candidates.length,
-              itemBuilder: (BuildContext context, int index) {
-                final candidate = state.candidates[index];
-                return ListTile(
-                  leading: const Icon(Icons.person),
-                  title: Text(
-                    candidate.name,
-                  ),
-                  trailing: Text(
-                    candidate.votesNumber.toString(),
-                    style: const TextStyle(color: Colors.green, fontSize: 15),
-                  ),
-                );
-              });
-        } else if (state is FetchCandidatesInProgress) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is FetchCandidatesFailure) {
-          return const Center(
-            child: Text('Error loading candidates list'),
-          );
-        }
-        return const SizedBox.shrink();
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: BlocBuilder<ElectionBloc, ElectionState>(
+        builder: (context, state) {
+          if (state is FetchCandidatesSuccess) {
+            return ListView.builder(
+                shrinkWrap: true,
+                itemCount: state.candidates.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final candidate = state.candidates[index];
+                  return ListTile(
+                    leading: const Icon(Icons.person),
+                    title: Text(
+                      candidate.name,
+                    ),
+                    trailing: Text(
+                      candidate.votesNumber.toString(),
+                      style: const TextStyle(color: Colors.green, fontSize: 15),
+                    ),
+                  );
+                });
+          } else if (state is FetchCandidatesInProgress) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is FetchCandidatesFailure) {
+            return const Center(
+              child: Text('Error loading candidates list'),
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 }
@@ -141,45 +175,7 @@ class _ElectionInputsWidgetState extends State<_ElectionInputsWidget> {
             children: [
               Column(
                 children: [
-                  TextField(
-                    controller: addCandidateController,
-                    keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                        filled: true, hintText: 'Enter candidate name'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          if (addCandidateController.text.isNotEmpty) {
-                            context.read<ElectionBloc>().add(
-                                  AddCandidatePressed(
-                                      candidateName:
-                                          addCandidateController.text),
-                                );
-                          }
-                        },
-                        child: state is AddCandidateInProgress
-                            ? const CircularProgressIndicator(
-                                color: Colors.white)
-                            : const Text('Add Candidate'),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40.0),
-              Column(
-                children: [
-                  TextField(
-                    keyboardType: TextInputType.text,
-                    controller: addVoteController,
-                    decoration: const InputDecoration(
-                        filled: true, hintText: 'Enter voter address'),
-                  ),
+                  const AddressDropDownWidget(),
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0),
                     child: SizedBox(

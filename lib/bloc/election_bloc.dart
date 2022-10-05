@@ -10,7 +10,6 @@ part 'election_state.dart';
 
 class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   final ElectionRepository electionRepository;
-  int totalCandidates = 0;
   ElectionBloc({required this.electionRepository}) : super(ElectionInitial()) {
     on<StartElectionPressed>(_onStartElectionPressed);
     on<AddCandidatePressed>(_onAddCandidatePressed);
@@ -19,7 +18,17 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<FetchAllCandidates>(_onFetchAllCandidates);
   }
 
-  Future<void> _onStartElectionPressed(StartElectionPressed event, Emitter<ElectionState> emit) async {
+  int totalCandidates = 0;
+  final _votersAddresses = [
+    '0x7945A4B80a73a3dEE4d06aAdCED71799670cA369',
+    '0xb92f5E793B2EA586d68668817C387A70Cb68778D',
+  ];
+
+  List get getVotersAddresses => _votersAddresses;
+
+
+  Future<void> _onStartElectionPressed(
+      StartElectionPressed event, Emitter<ElectionState> emit) async {
     emit(ElectionStartInProgress());
     await Future.delayed(const Duration(seconds: 2));
     try {
@@ -31,7 +40,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onAddCandidatePressed(AddCandidatePressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onAddCandidatePressed(
+      AddCandidatePressed event, Emitter<ElectionState> emit) async {
     emit(AddCandidateInProgress());
     try {
       await electionRepository.addCandidate(event.candidateName);
@@ -43,7 +53,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onAuthorizeVoterPressed(AuthorizedVoterPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onAuthorizeVoterPressed(
+      AuthorizedVoterPressed event, Emitter<ElectionState> emit) async {
     emit(AuthorizeVoterInProgress());
     try {
       await electionRepository.authorizeVoter(event.voterAddress);
@@ -54,7 +65,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onGetCandidateInfoPressed(GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
+  Future<void> _onGetCandidateInfoPressed(
+      GetCandidateInfoPressed event, Emitter<ElectionState> emit) async {
     emit(GetCandidateInfoInProgress());
     try {
       final candidate = await electionRepository.getCandidateInfo(event.index);
@@ -65,7 +77,8 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     }
   }
 
-  Future<void> _onFetchAllCandidates(FetchAllCandidates event, Emitter<ElectionState> emit) async {
+  Future<void> _onFetchAllCandidates(
+      FetchAllCandidates event, Emitter<ElectionState> emit) async {
     emit(FetchCandidatesInProgress());
     try {
       print('Fetching....');
