@@ -18,7 +18,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<FetchAllCandidates>(_onFetchAllCandidates);
     on<VoterAddressSelected>(_onVoterAddressSelected);
   }
-
+  late String _electionId;
   String? _currentSelectedAddress;
   int totalCandidates = 0;
   final _votersAddresses = [
@@ -34,7 +34,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     emit(ElectionStartInProgress());
     await Future.delayed(const Duration(seconds: 2));
     try {
-      await electionRepository.startElection(event.electionName);
+      _electionId = await electionRepository.startElection(event.electionName);
       emit(ElectionStartSuccess(electionName: event.electionName));
     } on Object catch (error) {
       print(error);
@@ -83,7 +83,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
       FetchAllCandidates event, Emitter<ElectionState> emit) async {
     emit(FetchCandidatesInProgress());
     try {
-      final candidatesList = await electionRepository.getCandidates();
+      final candidatesList = await electionRepository.getCandidates(_electionId);
       emit(FetchCandidatesSuccess(candidatesList));
     } on Object catch (error) {
       print(error);

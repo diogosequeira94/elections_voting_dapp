@@ -43,10 +43,11 @@ class ElectionRepository {
 
   Future<String> startElection(String name) async {
     final id =  const Uuid().v4();
-    final response = await callFunction(
+    await callFunction(
         'startElection', Endpoints.ownerPrivateKey(), [id, name, Endpoints.ownerPrivateKey()]);
     print('Election started successfully');
-    return response;
+    print('Election Id: $id');
+    return id;
   }
 
   Future<String> addCandidate(
@@ -67,13 +68,13 @@ class ElectionRepository {
     return response;
   }
 
-  Future<List<Candidate>> getCandidates() async {
+  Future<List<Candidate>> getCandidates(String electionId) async {
     final contract = _electionWeb3ApiClient.getDeployedContract;
     final function = contract.function('getAlLCandidates');
     final candidatesRawList = await _electionWeb3ApiClient.ethWeb3client.call(
       contract: contract,
       function: function,
-      params: [],
+      params: [electionId],
     );
 
     List innerArray = candidatesRawList[0];
