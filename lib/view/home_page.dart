@@ -28,7 +28,8 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ElectionPageWidget(electionName: state.electionName),
+                builder: (context) =>
+                    ElectionPageWidget(electionName: state.electionName),
               ),
             );
             // Navigate to election information page
@@ -56,10 +57,11 @@ class HomePage extends StatelessWidget {
                   ),
                   TextField(
                     controller: controller,
-                    decoration: const InputDecoration(filled: true, hintText: 'Enter election name'),
+                    decoration: const InputDecoration(
+                        filled: true, hintText: 'Enter election name'),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 24.0),
+                    padding: const EdgeInsets.only(top: 24.0, bottom: 20.0),
                     child: SizedBox(
                       width: double.infinity,
                       height: 45,
@@ -67,16 +69,57 @@ class HomePage extends StatelessWidget {
                         onPressed: () async {
                           if (controller.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
-                                  StartElectionPressed(electionName: controller.text),
+                                  StartElectionPressed(
+                                      electionName: controller.text),
                                 );
                           }
                         },
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                        ),
                         child: state is ElectionStartInProgress
-                            ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text('Start Election'),
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
+                            : const Text('Create new Election'),
                       ),
                     ),
-                  )
+                  ),
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Or',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0, bottom: 20.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.blueAccent),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          print('Choose election pressed');
+                        },
+                        child: state is ElectionStartInProgress
+                            ? const CircularProgressIndicator(
+                            color: Colors.white)
+                            : const Text('Choose existing one'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
