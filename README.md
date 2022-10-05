@@ -29,6 +29,9 @@ Simulate adding candidates, authrozing voters and vote through Ethereum addresse
         |   |   |-- election_repository.dart
         |   |   |-- election_web3_api_client.dart
         |   |-- view
+        |   |   |   |-- widgets
+        |   |   |   |   | -- address_dropdown_widget.dart
+        |   |   |-- add_candidate_form.dart
         |   |   |-- election_information.dart
         |   |   |-- home_page.dart
         |   |-- main.dart
