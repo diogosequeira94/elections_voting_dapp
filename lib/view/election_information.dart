@@ -25,7 +25,6 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
         actions: [
           IconButton(
               onPressed: () {
-                final topPadding = MediaQuery.of(context).padding.top;
                 showModalBottomSheet(
                   context: context,
                   useRootNavigator: true,
@@ -106,6 +105,7 @@ class _CandidatesListWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 32.0),
       child: BlocBuilder<ElectionBloc, ElectionState>(
+        buildWhen: (oldState, newState) => newState is! SelectedAddressUpdated,
         builder: (context, state) {
           if (state is FetchCandidatesSuccess) {
             return ListView.builder(
