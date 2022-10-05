@@ -61,8 +61,7 @@ class _AddNoteFormWidgetState extends State<AddCandidateFormWidget> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: BlocBuilder<ElectionBloc, ElectionState>(
-                builder: (context, state) {
+            child: BlocBuilder<ElectionBloc, ElectionState>(builder: (context, state) {
               return ElevatedButton(
                 onPressed: () {
                   context.read<ElectionBloc>().add(

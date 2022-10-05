@@ -28,8 +28,7 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ElectionPageWidget(electionName: state.electionName),
+                builder: (context) => ElectionPageWidget(electionName: state.electionName),
               ),
             );
             // Navigate to election information page
@@ -57,8 +56,7 @@ class HomePage extends StatelessWidget {
                   ),
                   TextField(
                     controller: controller,
-                    decoration: const InputDecoration(
-                        filled: true, hintText: 'Enter election name'),
+                    decoration: const InputDecoration(filled: true, hintText: 'Enter election name'),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0, bottom: 20.0),
@@ -69,8 +67,7 @@ class HomePage extends StatelessWidget {
                         onPressed: () async {
                           if (controller.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
-                                  StartElectionPressed(
-                                      electionName: controller.text),
+                                  StartElectionPressed(electionName: controller.text),
                                 );
                           }
                         },
@@ -82,8 +79,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         child: state is ElectionStartInProgress
-                            ? const CircularProgressIndicator(
-                                color: Colors.white)
+                            ? const CircularProgressIndicator(color: Colors.white)
                             : const Text('Create new Election'),
                       ),
                     ),
@@ -102,8 +98,7 @@ class HomePage extends StatelessWidget {
                       height: 45,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all(Colors.blueAccent),
+                          backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
@@ -114,8 +109,7 @@ class HomePage extends StatelessWidget {
                           print('Choose election pressed');
                         },
                         child: state is ElectionStartInProgress
-                            ? const CircularProgressIndicator(
-                            color: Colors.white)
+                            ? const CircularProgressIndicator(color: Colors.white)
                             : const Text('Choose existing one'),
                       ),
                     ),

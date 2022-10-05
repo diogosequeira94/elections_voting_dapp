@@ -23,9 +23,7 @@ class AddressDropDownWidget extends StatelessWidget {
               child: DropdownButton(
                 isExpanded: true,
                 hint: const Text('Select an Address'),
-                value: (state is SelectedAddressUpdated)
-                    ? state.updatedAddress
-                    : addressesList[0],
+                value: (state is SelectedAddressUpdated) ? state.updatedAddress : addressesList[0],
                 onChanged: (address) {
                   electionsBloc.add(VoterAddressSelected(address.toString()));
                 },
