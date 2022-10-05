@@ -31,7 +31,7 @@ contract Election {
     uint public totalVotes;
 
     /// Owner is who triggered the election
-    function startElection(string memory _id, string memory _name, string memory creatorAddress) public {
+    function startElection(string memory _id, string memory _name, string memory _creatorAddress) public {
         owner = msg.sender;
         elections.push(Election(_id, _name, _creatorAddress));
     }
