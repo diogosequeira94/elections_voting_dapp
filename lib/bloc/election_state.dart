@@ -96,6 +96,8 @@ class FetchCandidatesFailure extends ElectionState {
 }
 
 class SelectedAddressUpdated extends ElectionState {
+  final String updatedAddress;
+  const SelectedAddressUpdated({required this.updatedAddress});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [updatedAddress];
 }

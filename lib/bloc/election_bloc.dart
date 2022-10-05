@@ -83,13 +83,10 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
       FetchAllCandidates event, Emitter<ElectionState> emit) async {
     emit(FetchCandidatesInProgress());
     try {
-      print('Fetching....');
       final candidatesList = await electionRepository.getCandidates();
-      print('SCUCESS....');
       emit(FetchCandidatesSuccess(candidatesList));
     } on Object catch (error) {
       print(error);
-      print('ERROR.... $error');
       emit(FetchCandidatesFailure());
     }
   }
@@ -97,6 +94,6 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   Future<void> _onVoterAddressSelected(
       VoterAddressSelected event, Emitter<ElectionState> emit) async {
     _currentSelectedAddress = event.selectedAddress;
-    emit(SelectedAddressUpdated());
+    emit(SelectedAddressUpdated(updatedAddress: _currentSelectedAddress!));
   }
 }

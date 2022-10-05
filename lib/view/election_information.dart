@@ -69,6 +69,7 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
                       Column(
                         children: [
                           const Text('Total Candidates', style: labelTextStyle),
+                          const SizedBox(height: 5.0),
                           Text(
                               context
                                   .read<ElectionBloc>()
@@ -80,6 +81,7 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
                       Column(
                         children: const [
                           Text('Total Votes', style: labelTextStyle),
+                          SizedBox(height: 5.0),
                           Text('0', style: valueTextStyle),
                         ],
                       ),
