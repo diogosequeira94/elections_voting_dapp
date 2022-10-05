@@ -1,6 +1,7 @@
 import 'package:elections_dapp/models/candidate.dart';
 import 'package:elections_dapp/repository/election_web3_api_client.dart';
 import 'package:elections_dapp/repository/endpoints.dart';
+import 'package:uuid/uuid.dart';
 import 'package:web3dart/web3dart.dart';
 
 /// Election Repository
@@ -41,7 +42,7 @@ class ElectionRepository {
   }
 
   Future<String> startElection(String name) async {
-    final id = Uuid.v4();
+    final id =  const Uuid().v4();
     final response = await callFunction(
         'startElection', Endpoints.ownerPrivateKey(), [id, name, Endpoints.ownerPrivateKey()]);
     print('Election started successfully');
