@@ -68,6 +68,7 @@ class _AddNoteFormWidgetState extends State<AddCandidateFormWidget> {
                   context.read<ElectionBloc>().add(
                         AddCandidatePressed(
                           candidateName: nameTextEditingController.text,
+                          party: partyTextEditingController.text,
                         ),
                       );
                 },

@@ -46,7 +46,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
       AddCandidatePressed event, Emitter<ElectionState> emit) async {
     emit(AddCandidateInProgress());
     try {
-      await electionRepository.addCandidate(event.candidateName);
+      await electionRepository.addCandidate(event.candidateName, event.party);
       totalCandidates++;
       emit(AddCandidateSuccess());
     } on Object catch (error) {
