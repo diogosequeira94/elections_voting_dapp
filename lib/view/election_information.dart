@@ -104,7 +104,7 @@ class _CandidatesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      padding: const EdgeInsets.only(top: 32.0),
       child: BlocBuilder<ElectionBloc, ElectionState>(
         builder: (context, state) {
           if (state is FetchCandidatesSuccess) {
@@ -183,7 +183,7 @@ class _ElectionInputsWidgetState extends State<_ElectionInputsWidget> {
     return BlocBuilder<ElectionBloc, ElectionState>(
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.only(top: 24.0, bottom: 24.0),
+          padding: const EdgeInsets.only(top: 18.0, bottom: 24.0),
           child: Column(
             children: [
               Column(

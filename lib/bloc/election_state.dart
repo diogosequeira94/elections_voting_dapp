@@ -94,3 +94,8 @@ class FetchCandidatesFailure extends ElectionState {
   @override
   List<Object> get props => [];
 }
+
+class SelectedAddressUpdated extends ElectionState {
+  @override
+  List<Object> get props => [];
+}

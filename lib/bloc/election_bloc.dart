@@ -16,16 +16,18 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<AuthorizedVoterPressed>(_onAuthorizeVoterPressed);
     on<GetCandidateInfoPressed>(_onGetCandidateInfoPressed);
     on<FetchAllCandidates>(_onFetchAllCandidates);
+    on<VoterAddressSelected>(_onVoterAddressSelected);
   }
 
+  String? _currentSelectedAddress;
   int totalCandidates = 0;
   final _votersAddresses = [
     '0x7945A4B80a73a3dEE4d06aAdCED71799670cA369',
     '0xb92f5E793B2EA586d68668817C387A70Cb68778D',
   ];
 
+  String? get selectedAddress => _currentSelectedAddress;
   List get getVotersAddresses => _votersAddresses;
-
 
   Future<void> _onStartElectionPressed(
       StartElectionPressed event, Emitter<ElectionState> emit) async {
@@ -90,5 +92,11 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
       print('ERROR.... $error');
       emit(FetchCandidatesFailure());
     }
+  }
+
+  Future<void> _onVoterAddressSelected(
+      VoterAddressSelected event, Emitter<ElectionState> emit) async {
+    _currentSelectedAddress = event.selectedAddress;
+    emit(SelectedAddressUpdated());
   }
 }

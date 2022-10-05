@@ -47,4 +47,3 @@ class VoterAddressSelected extends ElectionEvent {
   @override
   List<Object?> get props => [selectedAddress];
 }
-

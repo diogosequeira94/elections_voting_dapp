@@ -9,24 +9,33 @@ class AddressDropDownWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final electionsBloc = context.read<ElectionBloc>();
     final addressesList = electionsBloc.getVotersAddresses;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        DropdownButton(
-          isExpanded: true,
-          hint: const Text('Select an Address'),
-          onChanged: (address) {
-            // electionsBloc.add(FetchAllCandidates());
-            // select new item
-          },
-          items: addressesList.map((address) {
-            return DropdownMenuItem(
-              value: address,
-              child: Text(address),
-            );
-          }).toList(),
-        ),
-      ],
+    return BlocBuilder<ElectionBloc, ElectionState>(
+      builder: (context, state) {
+        final selectedAddress = electionsBloc.selectedAddress ?? addressesList[0];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text('Select an Address', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: DropdownButton(
+                isExpanded: true,
+                hint: const Text('Select an Address'),
+                value: selectedAddress,
+                onChanged: (address) {
+                  electionsBloc.add(VoterAddressSelected(address.toString()));
+                },
+                items: addressesList.map((addressItem) {
+                  return DropdownMenuItem(
+                    value: addressItem,
+                    child: Text(addressItem),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
