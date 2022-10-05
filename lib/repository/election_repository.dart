@@ -22,7 +22,8 @@ class ElectionRepository {
   /// and a List of [args] that will be used as params
   ///
   /// Other way should be splitting in several operations
-  Future<String> callFunction(String functionName, String privateKey, List<dynamic> args) async {
+  Future<String> callFunction(
+      String functionName, String privateKey, List<dynamic> args) async {
     final credentials = EthPrivateKey.fromHex(privateKey);
     final contract = _electionWeb3ApiClient.getDeployedContract;
     final function = contract.function(functionName);
@@ -40,20 +41,22 @@ class ElectionRepository {
   }
 
   Future<String> startElection(String name) async {
-    final response = await callFunction('startElection', Endpoints.ownerPrivateKey(), [name]);
+    final response = await callFunction(
+        'startElection', Endpoints.ownerPrivateKey(), [name]);
     print('Election started successfully');
     return response;
   }
 
   Future<String> addCandidate(String candidateName) async {
-    final response = await callFunction('addCandidate', Endpoints.ownerPrivateKey(), [candidateName]);
+    final response = await callFunction(
+        'addCandidate', Endpoints.ownerPrivateKey(), [candidateName]);
     print('Candidate added successfully');
     return response;
   }
 
   Future<String> authorizeVoter(String address) async {
-    final response =
-        await callFunction('authorizeVoter', Endpoints.ownerPrivateKey(), [EthereumAddress.fromHex(address)]);
+    final response = await callFunction('authorizeVoter',
+        Endpoints.ownerPrivateKey(), [EthereumAddress.fromHex(address)]);
     print('Voter successfully authorized');
     return response;
   }
@@ -73,7 +76,8 @@ class ElectionRepository {
     for (var i = 0; i < innerArray.length; i++) {
       final candidate = Candidate(
         name: innerArray[i][0],
-        votesNumber: innerArray[i][1].toInt(),
+        party: innerArray[i][1],
+        votesNumber: innerArray[i][2].toInt(),
       );
       candidatesList.add(candidate);
     }
@@ -89,17 +93,23 @@ class ElectionRepository {
       params: [BigInt.from(index)],
     );
     print('Getting candidate info....');
-    final candidate = Candidate(name: candidateInfo[0][0], votesNumber: candidateInfo[0][1].toInt());
+    final candidate = Candidate(
+      name: candidateInfo[0][0],
+      party: candidateInfo[0][1],
+      votesNumber: candidateInfo[0][2].toInt(),
+    );
     return candidate;
   }
 
   Future<String> getTotalVotes() async {
-    final voteCount = await callFunction('getTotalVotes', Endpoints.ownerPrivateKey(), []);
+    final voteCount =
+        await callFunction('getTotalVotes', Endpoints.ownerPrivateKey(), []);
     return voteCount;
   }
 
   Future<String> vote(int candidateIndex) async {
-    final response = await callFunction('vote', Endpoints.voterPrivateKey(), [BigInt.from(candidateIndex)]);
+    final response = await callFunction(
+        'vote', Endpoints.voterPrivateKey(), [BigInt.from(candidateIndex)]);
     print('Vote counted successfully');
     return response;
   }

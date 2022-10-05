@@ -6,6 +6,7 @@ contract Election {
 
     struct Candidate {
         string name;
+        string party;
         uint votesNumber;
     }
 
@@ -35,8 +36,8 @@ contract Election {
     }
 
     /// Only owner can addCandidates
-    function addCandidate(string memory _candidateName) ownerOnly public {
-        candidates.push(Candidate(_candidateName, 0));
+    function addCandidate(string memory _candidateName, string memory _party) ownerOnly public {
+        candidates.push(Candidate(_candidateName, _party, 0));
     }
 
     function getCandidatesNumber() public view returns(uint){
