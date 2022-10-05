@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ElectionInformation(electionName: state.electionName),
+                builder: (context) => ElectionPageWidget(electionName: state.electionName),
               ),
             );
             // Navigate to election information page
