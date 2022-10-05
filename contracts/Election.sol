@@ -74,7 +74,8 @@ contract Election {
         return totalVotes;
     }
 
-    function getAlLCandidates() public view returns(Candidate[] memory){
+    function getAlLCandidates(string memory _electionId) public view returns(Candidate[] memory){
+        /// find election where id == _electionId
         return candidates;
     }
 }
