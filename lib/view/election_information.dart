@@ -238,6 +238,26 @@ class _AuthorizationButtonWidgetState
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.deepOrange),
+                        ),
+                        onPressed: () async {
+                          print('Vote pressed');
+                        },
+                        child: state is AuthorizeVoterInProgress
+                            ? const CircularProgressIndicator(
+                            color: Colors.white)
+                            : const Text('Vote'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
