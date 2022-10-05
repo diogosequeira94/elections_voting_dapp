@@ -118,6 +118,9 @@ class _CandidatesListWidget extends StatelessWidget {
                     title: Text(
                       candidate.name,
                     ),
+                    subtitle: Text(
+                      candidate.party,
+                    ),
                     trailing: Text(
                       candidate.votesNumber.toString(),
                       style: const TextStyle(color: Colors.green, fontSize: 15),
