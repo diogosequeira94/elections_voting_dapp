@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ElectionPageWidget extends StatefulWidget {
   final String electionName;
-  const ElectionPageWidget({Key? key, required this.electionName}) : super(key: key);
+  const ElectionPageWidget({Key? key, required this.electionName})
+      : super(key: key);
 
   @override
   State<ElectionPageWidget> createState() => _ElectionPageWidgetState();
@@ -56,7 +57,8 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
         builder: (context, state) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -68,7 +70,12 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
                         children: [
                           const Text('Total Candidates', style: labelTextStyle),
                           const SizedBox(height: 5.0),
-                          Text(context.read<ElectionBloc>().totalCandidates.toString(), style: valueTextStyle),
+                          Text(
+                              context
+                                  .read<ElectionBloc>()
+                                  .totalCandidates
+                                  .toString(),
+                              style: valueTextStyle),
                         ],
                       ),
                       Column(
@@ -111,18 +118,32 @@ class _CandidatesListWidget extends StatelessWidget {
                 itemCount: state.candidates.length,
                 itemBuilder: (BuildContext context, int index) {
                   final candidate = state.candidates[index];
-                  return ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Text(
-                      candidate.name,
-                    ),
-                    subtitle: Text(
-                      candidate.party,
-                    ),
-                    trailing: Text(
-                      candidate.votesNumber.toString(),
-                      style: const TextStyle(color: Colors.green, fontSize: 15),
-                    ),
+                  return Row(
+                    children: [
+                      Flexible(
+                        child: ListTile(
+                          leading: const Icon(Icons.person),
+                          title: Text(
+                            candidate.name,
+                          ),
+                          subtitle: Text(
+                            candidate.party,
+                          ),
+                          trailing: Text(
+                            candidate.votesNumber.toString(),
+                            style: const TextStyle(
+                                color: Colors.green, fontSize: 15),
+                          ),
+                        ),
+                      ),
+                      Checkbox(
+                        checkColor: Colors.white,
+                        value: candidate.isSelected,
+                        onChanged: (bool? value) {
+
+                        },
+                      ),
+                    ],
                   );
                 });
           } else if (state is FetchCandidatesInProgress) {
@@ -158,10 +179,12 @@ class _AuthorizationButtonWidget extends StatefulWidget {
   const _AuthorizationButtonWidget({Key? key}) : super(key: key);
 
   @override
-  State<_AuthorizationButtonWidget> createState() => _AuthorizationButtonWidgetState();
+  State<_AuthorizationButtonWidget> createState() =>
+      _AuthorizationButtonWidgetState();
 }
 
-class _AuthorizationButtonWidgetState extends State<_AuthorizationButtonWidget> {
+class _AuthorizationButtonWidgetState
+    extends State<_AuthorizationButtonWidget> {
   late TextEditingController addCandidateController;
   late TextEditingController addVoteController;
 
@@ -197,17 +220,20 @@ class _AuthorizationButtonWidgetState extends State<_AuthorizationButtonWidget> 
                       height: 45,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.green),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
                         ),
                         onPressed: () async {
                           if (addVoteController.text.isNotEmpty) {
                             context.read<ElectionBloc>().add(
-                                  AuthorizedVoterPressed(voterAddress: addVoteController.text),
+                                  AuthorizedVoterPressed(
+                                      voterAddress: addVoteController.text),
                                 );
                           }
                         },
                         child: state is AuthorizeVoterInProgress
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text('Authorize Voter'),
                       ),
                     ),

@@ -4,12 +4,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Election {
 
-    struct Election {
-        string id;
-        string name;
-        string creatorAddress;
-    }
-
     struct Candidate {
         string name;
         string party;
@@ -24,16 +18,16 @@ contract Election {
     }
 
     address public owner;
+    string public electionName;
 
     mapping(address => Voter) public voters;
     Candidate[] public candidates;
-    Election[] public elections;
     uint public totalVotes;
 
     /// Owner is who triggered the election
-    function startElection(string memory _id, string memory _name, string memory _creatorAddress) public {
+    function startElection(string memory _electionName) public {
         owner = msg.sender;
-        elections.push(Election(_id, _name, _creatorAddress));
+        electionName = _electionName;
     }
 
     modifier ownerOnly() {
@@ -74,8 +68,7 @@ contract Election {
         return totalVotes;
     }
 
-    function getAlLCandidates(string memory _electionId) public view returns(Candidate[] memory){
-        /// find election where id == _electionId
+    function getAlLCandidates() public view returns(Candidate[] memory){
         return candidates;
     }
 }

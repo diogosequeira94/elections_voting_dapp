@@ -1,7 +1,6 @@
 import 'package:elections_dapp/models/candidate.dart';
 import 'package:elections_dapp/repository/election_web3_api_client.dart';
 import 'package:elections_dapp/repository/endpoints.dart';
-import 'package:uuid/uuid.dart';
 import 'package:web3dart/web3dart.dart';
 
 /// Election Repository
@@ -40,12 +39,11 @@ class ElectionRepository {
     );
   }
 
+  ///Elections could haven an Uuid().v4()
   Future<String> startElection(String name) async {
-    final id = const Uuid().v4();
-    await callFunction('startElection', Endpoints.ownerPrivateKey(), [id, name, Endpoints.ownerPrivateKey()]);
+    final response = await callFunction('startElection', Endpoints.ownerPrivateKey(), [name]);
     print('Election started successfully');
-    print('Election Id: $id');
-    return id;
+    return response;
   }
 
   Future<String> addCandidate(String candidateName, String candidateParty) async {
@@ -65,13 +63,13 @@ class ElectionRepository {
     return response;
   }
 
-  Future<List<Candidate>> getCandidates(String electionId) async {
+  Future<List<Candidate>> getCandidates() async {
     final contract = _electionWeb3ApiClient.getDeployedContract;
     final function = contract.function('getAlLCandidates');
     final candidatesRawList = await _electionWeb3ApiClient.ethWeb3client.call(
       contract: contract,
       function: function,
-      params: [electionId],
+      params: [],
     );
 
     List innerArray = candidatesRawList[0];
@@ -82,6 +80,7 @@ class ElectionRepository {
         name: innerArray[i][0],
         party: innerArray[i][1],
         votesNumber: innerArray[i][2].toInt(),
+        isSelected: false,
       );
       candidatesList.add(candidate);
     }
@@ -101,6 +100,7 @@ class ElectionRepository {
       name: candidateInfo[0][0],
       party: candidateInfo[0][1],
       votesNumber: candidateInfo[0][2].toInt(),
+      isSelected: false,
     );
     return candidate;
   }

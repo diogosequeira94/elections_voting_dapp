@@ -18,7 +18,6 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<FetchAllCandidates>(_onFetchAllCandidates);
     on<VoterAddressSelected>(_onVoterAddressSelected);
   }
-  late String _electionId;
   String? _currentSelectedAddress;
   int totalCandidates = 0;
   final _votersAddresses = [
@@ -33,10 +32,9 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     emit(ElectionStartInProgress());
     await Future.delayed(const Duration(seconds: 2));
     try {
-      _electionId = await electionRepository.startElection(event.electionName);
+      await electionRepository.startElection(event.electionName);
       emit(ElectionStartSuccess(electionName: event.electionName));
-    } on Object catch (error) {
-      print(error);
+    } on Object catch (_) {
       emit(ElectionStartFailure());
     }
   }
@@ -47,8 +45,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
       await electionRepository.addCandidate(event.candidateName, event.party);
       totalCandidates++;
       emit(AddCandidateSuccess());
-    } on Object catch (error) {
-      print(error);
+    } on Object catch (_) {
       emit(AddCandidateFailure());
     }
   }
@@ -58,8 +55,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     try {
       await electionRepository.authorizeVoter(event.voterAddress);
       emit(AuthorizeVoterSuccess());
-    } on Object catch (error) {
-      print(error);
+    } on Object catch (_) {
       emit(AuthorizeVoterFailure());
     }
   }
@@ -69,8 +65,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     try {
       final candidate = await electionRepository.getCandidateInfo(event.index);
       emit(GetCandidateInfoSuccess(candidate));
-    } on Object catch (error) {
-      print(error);
+    } on Object catch (_) {
       emit(GetCandidateInfoFailure());
     }
   }
@@ -78,10 +73,9 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   Future<void> _onFetchAllCandidates(FetchAllCandidates event, Emitter<ElectionState> emit) async {
     emit(FetchCandidatesInProgress());
     try {
-      final candidatesList = await electionRepository.getCandidates(_electionId);
+      final candidatesList = await electionRepository.getCandidates();
       emit(FetchCandidatesSuccess(candidatesList));
-    } on Object catch (error) {
-      print(error);
+    } on Object catch (_) {
       emit(FetchCandidatesFailure());
     }
   }

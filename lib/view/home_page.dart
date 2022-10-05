@@ -106,11 +106,9 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () async {
-                          print('Choose election pressed');
+                         print('Not available in beta');
                         },
-                        child: state is ElectionStartInProgress
-                            ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text('Choose existing one'),
+                        child: const Text('Choose existing one'),
                       ),
                     ),
                   ),
