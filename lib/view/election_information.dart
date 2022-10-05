@@ -86,7 +86,10 @@ class _ElectionPageWidgetState extends State<ElectionPageWidget> {
                     ],
                   ),
                   const _CandidatesListWidget(),
-                  const _ElectionInputsWidget(),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 24.0),
+                    child: _AuthorizationButtonWidget(),
+                  ),
                 ],
               ),
             ),
@@ -139,7 +142,7 @@ class _CandidatesListWidget extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(Icons.error, size: 125),
+              Icon(Icons.error, size: 100),
               SizedBox(height: 30),
               Center(
                 child: Text(
@@ -156,14 +159,16 @@ class _CandidatesListWidget extends StatelessWidget {
   }
 }
 
-class _ElectionInputsWidget extends StatefulWidget {
-  const _ElectionInputsWidget({Key? key}) : super(key: key);
+class _AuthorizationButtonWidget extends StatefulWidget {
+  const _AuthorizationButtonWidget({Key? key}) : super(key: key);
 
   @override
-  State<_ElectionInputsWidget> createState() => _ElectionInputsWidgetState();
+  State<_AuthorizationButtonWidget> createState() =>
+      _AuthorizationButtonWidgetState();
 }
 
-class _ElectionInputsWidgetState extends State<_ElectionInputsWidget> {
+class _AuthorizationButtonWidgetState
+    extends State<_AuthorizationButtonWidget> {
   late TextEditingController addCandidateController;
   late TextEditingController addVoteController;
 
