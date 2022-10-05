@@ -40,3 +40,11 @@ class FetchAllCandidates extends ElectionEvent {
   @override
   List<Object?> get props => [];
 }
+
+class VoterAddressSelected extends ElectionEvent {
+  final String selectedAddress;
+  const VoterAddressSelected(this.selectedAddress);
+  @override
+  List<Object?> get props => [selectedAddress];
+}
+

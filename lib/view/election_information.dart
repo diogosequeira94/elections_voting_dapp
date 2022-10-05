@@ -104,7 +104,7 @@ class _CandidatesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 32.0),
       child: BlocBuilder<ElectionBloc, ElectionState>(
         builder: (context, state) {
           if (state is FetchCandidatesSuccess) {
@@ -133,7 +133,20 @@ class _CandidatesListWidget extends StatelessWidget {
               child: Text('Error loading candidates list'),
             );
           }
-          return const SizedBox.shrink();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.error, size: 125),
+              SizedBox(height: 30),
+              Center(
+                child: Text(
+                  'There are no candidates yet, click + to add some',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24.0),
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
@@ -170,7 +183,7 @@ class _ElectionInputsWidgetState extends State<_ElectionInputsWidget> {
     return BlocBuilder<ElectionBloc, ElectionState>(
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 24.0),
+          padding: const EdgeInsets.only(top: 24.0, bottom: 24.0),
           child: Column(
             children: [
               Column(
