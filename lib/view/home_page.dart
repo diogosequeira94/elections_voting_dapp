@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
         },
         builder: (context, state) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 32.0),
                     child: Text(
-                      'Welcome to the elections!',
+                      'Welcome to the elections',
                       style: TextStyle(fontSize: 24.0),
                       textAlign: TextAlign.center,
                     ),
