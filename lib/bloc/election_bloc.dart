@@ -17,6 +17,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<GetCandidateInfoPressed>(_onGetCandidateInfoPressed);
     on<FetchAllCandidates>(_onFetchAllCandidates);
     on<VoterAddressSelected>(_onVoterAddressSelected);
+    on<CandidateCheckboxSelected>(_onCandidateSelectionUpdated);
   }
   String? _currentSelectedAddress;
   int totalCandidates = 0;
@@ -24,6 +25,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     '0x7945A4B80a73a3dEE4d06aAdCED71799670cA369',
     '0xb92f5E793B2EA586d68668817C387A70Cb68778D',
   ];
+  late List<Candidate> candidatesList;
 
   String? get selectedAddress => _currentSelectedAddress;
   List get getVotersAddresses => _votersAddresses;
@@ -73,7 +75,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   Future<void> _onFetchAllCandidates(FetchAllCandidates event, Emitter<ElectionState> emit) async {
     emit(FetchCandidatesInProgress());
     try {
-      final candidatesList = await electionRepository.getCandidates();
+      candidatesList = await electionRepository.getCandidates();
       emit(FetchCandidatesSuccess(candidatesList));
     } on Object catch (_) {
       emit(FetchCandidatesFailure());
@@ -83,5 +85,18 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
   Future<void> _onVoterAddressSelected(VoterAddressSelected event, Emitter<ElectionState> emit) async {
     _currentSelectedAddress = event.selectedAddress;
     emit(SelectedAddressUpdated(updatedAddress: _currentSelectedAddress!));
+  }
+
+
+  Future<void> _onCandidateSelectionUpdated(CandidateCheckboxSelected event, Emitter<ElectionState> emit) async {
+    final selectedCandidate = candidatesList[event.index];
+    final updatedList = candidatesList.map((candidate) =>
+      candidate.id == selectedCandidate.id ?
+        candidate.copyWith(
+          isSelected: !candidate.isSelected,
+        ) : candidate
+    ).toList();
+    candidatesList = updatedList;
+    emit(CandidateSelectedUpdated(candidates: candidatesList));
   }
 }

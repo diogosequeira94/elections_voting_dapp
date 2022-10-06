@@ -101,3 +101,12 @@ class SelectedAddressUpdated extends ElectionState {
   @override
   List<Object> get props => [updatedAddress];
 }
+
+class CandidateSelectedUpdated extends FetchCandidatesSuccess {
+  final List<Candidate> candidates;
+
+  const CandidateSelectedUpdated({required this.candidates}) : super(candidates);
+  @override
+  List<Object> get props => [candidates];
+}
+

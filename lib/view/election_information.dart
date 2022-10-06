@@ -140,7 +140,7 @@ class _CandidatesListWidget extends StatelessWidget {
                         checkColor: Colors.white,
                         value: candidate.isSelected,
                         onChanged: (bool? value) {
-
+                          context.read<ElectionBloc>().add(CandidateCheckboxSelected(index, value!));
                         },
                       ),
                     ],

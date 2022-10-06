@@ -1,6 +1,7 @@
 import 'package:elections_dapp/models/candidate.dart';
 import 'package:elections_dapp/repository/election_web3_api_client.dart';
 import 'package:elections_dapp/repository/endpoints.dart';
+import 'package:uuid/uuid.dart';
 import 'package:web3dart/web3dart.dart';
 
 /// Election Repository
@@ -47,10 +48,11 @@ class ElectionRepository {
   }
 
   Future<String> addCandidate(String candidateName, String candidateParty) async {
+    final id = const Uuid().v4();
     final response = await callFunction(
       'addCandidate',
       Endpoints.ownerPrivateKey(),
-      [candidateName, candidateParty],
+      [id, candidateName, candidateParty],
     );
     print('Candidate added successfully');
     return response;
@@ -77,9 +79,10 @@ class ElectionRepository {
 
     for (var i = 0; i < innerArray.length; i++) {
       final candidate = Candidate(
-        name: innerArray[i][0],
-        party: innerArray[i][1],
-        votesNumber: innerArray[i][2].toInt(),
+        id: innerArray[i][0],
+        name: innerArray[i][1],
+        party: innerArray[i][2],
+        votesNumber: innerArray[i][3].toInt(),
         isSelected: false,
       );
       candidatesList.add(candidate);
@@ -97,9 +100,10 @@ class ElectionRepository {
     );
     print('Getting candidate info....');
     final candidate = Candidate(
-      name: candidateInfo[0][0],
-      party: candidateInfo[0][1],
-      votesNumber: candidateInfo[0][2].toInt(),
+      id: candidateInfo[0][0],
+      name: candidateInfo[0][1],
+      party: candidateInfo[0][2],
+      votesNumber: candidateInfo[0][3].toInt(),
       isSelected: false,
     );
     return candidate;

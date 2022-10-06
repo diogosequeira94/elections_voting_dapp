@@ -53,8 +53,9 @@ class VoterAddressSelected extends ElectionEvent {
 }
 
 class CandidateCheckboxSelected extends ElectionEvent {
+  final int index;
   final bool isSelected;
-  const CandidateCheckboxSelected(this.isSelected);
+  const CandidateCheckboxSelected(this.index, this.isSelected);
   @override
-  List<Object?> get props => [isSelected];
+  List<Object?> get props => [index, isSelected];
 }
