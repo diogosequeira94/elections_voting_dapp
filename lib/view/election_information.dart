@@ -140,7 +140,9 @@ class _CandidatesListWidget extends StatelessWidget {
                         checkColor: Colors.white,
                         value: candidate.isSelected,
                         onChanged: (bool? value) {
-                          context.read<ElectionBloc>().add(CandidateCheckboxSelected(index, value!));
+                          context
+                              .read<ElectionBloc>()
+                              .add(CandidateCheckboxSelected(index, value!));
                         },
                       ),
                     ],
@@ -246,14 +248,16 @@ class _AuthorizationButtonWidgetState
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                          MaterialStateProperty.all(Colors.deepOrange),
+                              MaterialStateProperty.all(Colors.deepOrange),
                         ),
-                        onPressed: () async {
-                          print('Vote pressed');
-                        },
+                        onPressed:
+                            context.read<ElectionBloc>().selectedCandidate ==
+                                    null
+                                ? null
+                                : () => print('Vote pressed'),
                         child: state is AuthorizeVoterInProgress
                             ? const CircularProgressIndicator(
-                            color: Colors.white)
+                                color: Colors.white)
                             : const Text('Vote'),
                       ),
                     ),

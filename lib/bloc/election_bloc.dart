@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:elections_dapp/models/candidate.dart';
 import 'package:elections_dapp/repository/election_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:collection/collection.dart';
 
 part 'election_event.dart';
 part 'election_state.dart';
@@ -19,15 +20,19 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
     on<VoterAddressSelected>(_onVoterAddressSelected);
     on<CandidateCheckboxSelected>(_onCandidateSelectionUpdated);
   }
+
+  late List<Candidate> candidatesList;
   String? _currentSelectedAddress;
+  Candidate? _selectedCandidate = null;
   int totalCandidates = 0;
   final _votersAddresses = [
     '0x7945A4B80a73a3dEE4d06aAdCED71799670cA369',
     '0xb92f5E793B2EA586d68668817C387A70Cb68778D',
   ];
-  late List<Candidate> candidatesList;
+
 
   String? get selectedAddress => _currentSelectedAddress;
+  Candidate? get selectedCandidate => _selectedCandidate;
   List get getVotersAddresses => _votersAddresses;
 
   Future<void> _onStartElectionPressed(StartElectionPressed event, Emitter<ElectionState> emit) async {
@@ -96,6 +101,7 @@ class ElectionBloc extends Bloc<ElectionEvent, ElectionState> {
           isSelected: !candidate.isSelected,
         ) : candidate
     ).toList();
+    _selectedCandidate = updatedList.singleWhereOrNull((candidate) => candidate.isSelected);
     candidatesList = updatedList;
     emit(CandidateSelectedUpdated(candidates: candidatesList));
   }
