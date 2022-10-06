@@ -8,6 +8,20 @@ Simulate starting an election, adding candidates, authrozing voters and vote thr
 - Truffle (npm install -g truffle)
 - Ganache (local blockchain)
 
+<table>
+  <tr>
+    <th>Home page</th>
+    <th>Election Info</th> 
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/17165238/194297213-889a6770-4fdf-48fa-ac9f-7335c54fe311.png"/></td>
+    <td><img src="https://user-images.githubusercontent.com/17165238/194296772-17612d3b-86f2-41a3-a97e-7e41aa8512cc.png"/></td>
+  </tr>
+</table>
+
+
+
+
 ## Folder structure
 ```
 |-- elections_voting
