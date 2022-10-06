@@ -15,10 +15,9 @@ Simulate starting an election, adding candidates, authrozing voters and vote thr
   </tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/17165238/194297213-889a6770-4fdf-48fa-ac9f-7335c54fe311.png"/></td>
-    <td><img src="https://user-images.githubusercontent.com/17165238/194296772-17612d3b-86f2-41a3-a97e-7e41aa8512cc.png"/></td>
+    <td><img src="https://user-images.githubusercontent.com/17165238/194383894-10264547-4d97-4112-b59a-3080a35958fd.png"/></td>
   </tr>
 </table>
-
 
 
 
