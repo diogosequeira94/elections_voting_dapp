@@ -27,6 +27,7 @@ contract Election {
 
     /// Owner is who triggered the election
     function startElection(string memory _electionName) public {
+        delete candidates;
         owner = msg.sender;
         electionName = _electionName;
     }

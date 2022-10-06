@@ -148,7 +148,7 @@ class _CandidatesListWidget extends StatelessWidget {
                     ],
                   );
                 });
-          } else if (state is FetchCandidatesInProgress) {
+          } else if (state is FetchCandidatesInProgress || state is AddCandidateInProgress) {
             return const Center(
               child: CircularProgressIndicator(),
             );
