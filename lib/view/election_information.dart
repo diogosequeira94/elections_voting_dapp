@@ -224,6 +224,11 @@ class _AuthorizationButtonWidgetState
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.green),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
                         ),
                         onPressed: () async {
                           if (addVoteController.text.isNotEmpty) {
@@ -249,6 +254,11 @@ class _AuthorizationButtonWidgetState
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.deepOrange),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
                         ),
                         onPressed:
                             context.read<ElectionBloc>().selectedCandidate ==
