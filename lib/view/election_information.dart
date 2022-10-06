@@ -209,7 +209,7 @@ class _AuthorizationButtonWidgetState
     return BlocBuilder<ElectionBloc, ElectionState>(
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.only(top: 18.0, bottom: 24.0),
+          padding: const EdgeInsets.only(top: 18.0, bottom: 24.0, left: 8.0, right: 8.0),
           child: Column(
             children: [
               Column(
