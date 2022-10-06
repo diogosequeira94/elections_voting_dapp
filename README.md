@@ -1,6 +1,6 @@
 # Election simulator
 
-Simulate adding candidates, authrozing voters and vote through Ethereum addresses on a mock blockchain server with Ganache.
+Simulate starting an election, adding candidates, authrozing voters and vote through Ethereum addresses on a mock blockchain server with Ganache.
 
 ## Requirements 
 - Android Studio / VScode
