@@ -25,7 +25,7 @@ contract Election {
     Candidate[] public candidates;
     uint public totalVotes;
 
-    /// Owner is who triggered the election
+    /// Owner is has triggered the election
     function startElection(string memory _electionName) public {
         delete candidates;
         owner = msg.sender;
