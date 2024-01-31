@@ -53,12 +53,10 @@ contract Election {
     function vote(uint candidateIndex) public {
         /// Needs to be authorized to vote
         require(voters[msg.sender].isAuthorised);
-        /// Check if voter has not voted yet
         require(!voters[msg.sender].hasVoted);
         voters[msg.sender].candidateChosen = candidateIndex;
         voters[msg.sender].hasVoted = true;
 
-        /// Increase candidate vote count by 1
         candidates[candidateIndex].votesNumber++;
     }
 
